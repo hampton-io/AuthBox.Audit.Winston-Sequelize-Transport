@@ -1,6 +1,6 @@
 # login.dfe.audit.winston-sequelize-transport
 
-[![Build Status](https://travis-ci.org/DFE-Digital/winston-transport-sequelize.svg?branch=master)](https://travis-ci.org/DFE-Digital/winston-transport-sequelize)
+[![Build Status](https://travis-ci.org/DFE-Digital/login.dfe.audit.winston-sequelize-transport.svg?branch=master)](https://travis-ci.org/DFE-Digital/login.dfe.audit.winston-sequelize-transport)
 
 Creates a winston sequelize transport. The following config options are required:
 
