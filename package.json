@@ -25,6 +25,6 @@
   "homepage": "https://github.com/DFE-Digital/login.dfe.audit.winston-sequelize-transport#readme",
   "dependencies": {
     "sequelize": "^4.32.2",
-    "winston-transport-sequelize": "^1.0.2"
+    "winston-transport-sequelize": "github:DFE-Digital/winston-transport-sequelize#master"
   }
 }
