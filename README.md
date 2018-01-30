@@ -30,7 +30,7 @@ usage is as follows:
 const winstonSequelizeTransport = require('login.dfe.audit.winston-sequelize-transport');
 
 
-const transport = new winstonSequelizeTransport(config);
+const transport = winstonSequelizeTransport(config);
 const loggerConfig = {
   transports: [],
 };
