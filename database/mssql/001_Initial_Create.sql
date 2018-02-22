@@ -14,6 +14,8 @@ IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'AuditL
         userId uniqueidentifier
     );
     CREATE INDEX level ON dbo.AuditLogs (level);
+    CREATE INDEX userId ON dbo.AuditLogs (userId);
+    CREATE INDEX type ON dbo.AuditLogs (type);
 END
 
 IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'AuditLogMeta')
@@ -26,4 +28,5 @@ IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'AuditL
         [value] nvarchar(max) NULL,
         CONSTRAINT [AuditLog_FK] FOREIGN KEY (auditId) REFERENCES AuditLogs(id)
     );
+    CREATE INDEX audit_key_value ON dbo.AuditLogMeta (auditId, [key], [value]);
 END
