@@ -38,4 +38,4 @@ const getWinstonSequelizeTransport = (config) => {
   return new WinstonTransportSequelize(options);
 };
 
-module.exports =  getWinstonSequelizeTransport;
+module.exports = getWinstonSequelizeTransport;
