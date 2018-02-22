@@ -1,0 +1,121 @@
+const Transport = require('winston-transport');
+const Sequelize = require('sequelize');
+const assert = require('assert');
+const uuid = require('uuid/v4');
+
+const logsSchema = {
+  id: {
+    type: Sequelize.UUID,
+    primaryKey: true,
+    allowNull: false,
+  },
+  level: Sequelize.STRING,
+  message: Sequelize.STRING,
+  application: Sequelize.STRING,
+  environment: Sequelize.STRING,
+  type: Sequelize.STRING,
+  subType: Sequelize.STRING,
+  userId: Sequelize.UUID,
+};
+const defaultLogsOptions = {
+  timestamps: true,
+  schema: 'dbo',
+  // TODO: Define indexes
+};
+const metaSchema = {
+  id: {
+    type: Sequelize.UUID,
+    primaryKey: true,
+    allowNull: false,
+  },
+  key: Sequelize.STRING,
+  value: Sequelize.STRING,
+};
+const defaultMetaOptions = {
+  timestamps: false,
+  schema: 'dbo',
+  // TODO: Define indexes
+};
+const keysToExcludeFromMeta = ['type', 'subType', 'userId'];
+
+const writeLog = async (logsModel, metaModel, level, message, meta, application, environment) => {
+  const id = uuid();
+
+  const log = await logsModel.create({
+    id,
+    level,
+    message,
+    application,
+    environment,
+    type: meta.type,
+    subType: meta.subType,
+    userId: meta.userId,
+  });
+
+  const metaKeys = Object.keys(meta);
+  for (let i = 0; i < metaKeys.length; i += 1) {
+    const key = metaKeys[i];
+
+    if (!keysToExcludeFromMeta.find(x => x === key)) {
+      const value = meta[key];
+      await metaModel.create({
+        id: uuid(),
+        auditId: id,
+        key,
+        value: value instanceof Object ? JSON.stringify(value) : value,
+      });
+    }
+  }
+
+  return log.get();
+};
+
+class SequelizeTransport extends Transport {
+  constructor(opts) {
+    super(opts);
+
+    assert(opts.database, 'Audit Database property must be supplied');
+    assert(opts.database.name, 'Audit Database property name must be supplied');
+    assert(opts.database.username, 'Audit Database property username must be supplied');
+    assert(opts.database.password, 'Audit Database property password must be supplied');
+    assert(opts.database.host, 'Audit Database property host must be supplied');
+    assert(opts.database.dialect, 'Audit Database property dialect must be supplied, this must be postgres or mssql');
+
+    this._db = new Sequelize(opts.database.name, opts.database.username, opts.database.password, {
+      host: opts.database.host,
+      dialect: opts.database.dialect,
+      dialectOptions: {
+        encrypt: opts.database.encrypt || false,
+      },
+    });
+
+    const logsOptions = Object.assign({}, defaultLogsOptions);
+    if (opts.database.schema) {
+      logsOptions.schema = opts.database.schema;
+    }
+    this._logs = this._db.define('AuditLogs', logsSchema, logsOptions);
+
+    const metaOptions = Object.assign({}, defaultMetaOptions);
+    if (opts.database.schema) {
+      metaOptions.schema = opts.database.schema;
+    }
+    this._meta = this._db.define('AuditLogMeta', metaSchema, metaOptions);
+    this._meta.belongsTo(this._logs, { as: 'AuditLog', foreignKey: 'auditId' });
+
+    this.opts = opts;
+  }
+
+  log(level, message, meta, callback) {
+    writeLog(this._logs, this._meta, level, message, meta, this.opts.application, this.opts.environment)
+      .then((log) => {
+        this.emit('logged');
+        callback(null, log);
+      })
+      .catch((e) => {
+        this.emit('error', e);
+        callback(e);
+      });
+  }
+}
+
+module.exports = SequelizeTransport;
