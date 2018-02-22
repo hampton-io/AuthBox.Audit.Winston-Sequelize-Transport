@@ -1,7 +1,7 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-const WinstonTransportSequelize = require('winston-transport-sequelize');
+const SequelizeTransport = require('./SequelizeTransport');
 const assert = require('assert');
 
 const getWinstonSequelizeTransport = (config) => {
@@ -27,6 +27,14 @@ const getWinstonSequelizeTransport = (config) => {
   });
   const options = {
     sequelize: db,
+    database: {
+      name: databaseName,
+      username: config.loggerSettings.auditDb.username,
+      password: config.loggerSettings.auditDb.password,
+      host: config.loggerSettings.auditDb.host,
+      dialect: config.loggerSettings.auditDb.dialect,
+      encrypt: encryptDb,
+    },
     tableName: 'AuditLogs',
     fields: { meta: Sequelize.JSONB },
     modelOptions: { timestamps: true },
@@ -35,7 +43,7 @@ const getWinstonSequelizeTransport = (config) => {
     environment: config.hostingEnvironment.env,
   };
 
-  return new WinstonTransportSequelize(options);
+  return new SequelizeTransport(options);
 };
 
-module.exports =  getWinstonSequelizeTransport;
+module.exports = getWinstonSequelizeTransport;

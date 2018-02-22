@@ -14,8 +14,10 @@
     "eslint": "^4.11.0",
     "eslint-config-airbnb-base": "^11.3.1",
     "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jest": "^21.12.2",
     "jest": "^21.2.1",
-    "jest-cli": "^21.2.1"
+    "jest-cli": "^21.2.1",
+    "winston": "^2.4.0"
   },
   "author": "",
   "license": "MIT",
@@ -26,6 +28,7 @@
   "dependencies": {
     "sequelize": "^4.32.2",
     "tedious": "^2.2.4",
-    "winston-transport-sequelize": "github:DFE-Digital/winston-transport-sequelize#master"
+    "uuid": "^3.2.1",
+    "winston-transport": "^3.0.1"
   }
 }

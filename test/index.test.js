@@ -1,5 +1,5 @@
 jest.mock('sequelize');
-jest.mock('winston-transport-sequelize');
+jest.mock('./../src/SequelizeTransport');
 
 const index = require('./../src/index');
 
@@ -19,7 +19,7 @@ describe('When getting the winston sequelize transport ', () => {
   });
   it('then the transport object is returned if the config is correctly set', () => {
     const sequelizeMock = require('sequelize');
-    const winstonMock = require('winston-transport-sequelize');
+    const winstonMock = require('./../src/SequelizeTransport');
 
     const configObject = {
       hostingEnvironment: {
