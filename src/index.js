@@ -1,7 +1,6 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-const WinstonTransportSequelize = require('winston-transport-sequelize');
 const SequelizeTransport = require('./SequelizeTransport');
 const assert = require('assert');
 

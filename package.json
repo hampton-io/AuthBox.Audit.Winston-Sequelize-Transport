@@ -29,7 +29,6 @@
     "sequelize": "^4.32.2",
     "tedious": "^2.2.4",
     "uuid": "^3.2.1",
-    "winston-transport": "^3.0.1",
-    "winston-transport-sequelize": "github:DFE-Digital/winston-transport-sequelize#master"
+    "winston-transport": "^3.0.1"
   }
 }
