@@ -28,5 +28,4 @@ IF NOT EXISTS(SELECT 1 FROM INFORMATION_SCHEMA.TABLES where TABLE_NAME = 'AuditL
         [value] nvarchar(max) NULL,
         CONSTRAINT [AuditLog_FK] FOREIGN KEY (auditId) REFERENCES AuditLogs(id)
     );
-    CREATE INDEX audit_key_value ON dbo.AuditLogMeta (auditId, [key], [value]);
 END
