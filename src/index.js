@@ -4,9 +4,17 @@ const Sequelize = require('sequelize');
 const SequelizeTransport = require('./SequelizeTransport');
 const assert = require('assert');
 
+const getIntValueOrDefault = (value, defaultValue = 0) => {
+  if (!value) {
+    return defaultValue;
+  }
+  const int = parseInt(value);
+  return isNaN(int) ? defaultValue : int;
+};
+
 const getWinstonSequelizeTransport = (config) => {
 
-  if(!config.loggerSettings.auditDb || !config.loggerSettings.auditDb.username) {
+  if (!config.loggerSettings.auditDb || !config.loggerSettings.auditDb.username) {
     return null;
   }
 
@@ -42,6 +50,15 @@ const getWinstonSequelizeTransport = (config) => {
     application: config.loggerSettings.applicationName,
     environment: config.hostingEnvironment.env,
   };
+
+  if (config.loggerSettings.auditDb.pool) {
+    options.database.pool = {
+      max: getIntValueOrDefault(config.loggerSettings.auditDb.pool.max, 5),
+      min: getIntValueOrDefault(config.loggerSettings.auditDb.pool.min, 0),
+      acquire: getIntValueOrDefault(config.loggerSettings.auditDb.pool.acquire, 10000),
+      idle: getIntValueOrDefault(config.loggerSettings.auditDb.pool.idle, 10000),
+    };
+  }
 
   return new SequelizeTransport(options);
 };

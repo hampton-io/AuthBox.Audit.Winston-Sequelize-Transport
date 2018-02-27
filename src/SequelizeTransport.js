@@ -81,13 +81,18 @@ class SequelizeTransport extends Transport {
     assert(opts.database.host, 'Audit Database property host must be supplied');
     assert(opts.database.dialect, 'Audit Database property dialect must be supplied, this must be postgres or mssql');
 
-    this._db = new Sequelize(opts.database.name, opts.database.username, opts.database.password, {
+    const dbOpts = {
       host: opts.database.host,
       dialect: opts.database.dialect,
       dialectOptions: {
         encrypt: opts.database.encrypt || false,
       },
-    });
+    };
+    if (opts.database.pool) {
+      dbOpts.pool = opts.database.pool;
+    }
+
+    this._db = new Sequelize(opts.database.name, opts.database.username, opts.database.password, dbOpts);
 
     const logsOptions = Object.assign({}, defaultLogsOptions);
     if (opts.database.schema) {
