@@ -58,11 +58,13 @@ const writeLog = async (logsModel, metaModel, level, message, meta, application,
 
     if (!keysToExcludeFromMeta.find(x => x === key)) {
       const value = meta[key];
+      const jsonify = value instanceof Object;
       await metaModel.create({
         id: uuid(),
         auditId: id,
         key,
-        value: value instanceof Object ? JSON.stringify(value) : value,
+        value: jsonify ? JSON.stringify(value) : value,
+        isJson: jsonify,
       });
     }
   }
@@ -82,6 +84,22 @@ class SequelizeTransport extends Transport {
     assert(opts.database.dialect, 'Audit Database property dialect must be supplied, this must be postgres or mssql');
 
     const dbOpts = {
+      retry: {
+        match: [
+          /SequelizeConnectionError/,
+          /SequelizeConnectionRefusedError/,
+          /SequelizeHostNotFoundError/,
+          /SequelizeHostNotReachableError/,
+          /SequelizeInvalidConnectionError/,
+          /SequelizeConnectionTimedOutError/,
+          /TimeoutError/,
+        ],
+        name: 'query',
+        backoffBase: 100,
+        backoffExponent: 1.1,
+        timeout: 60000,
+        max: 5,
+      },
       host: opts.database.host,
       dialect: opts.database.dialect,
       dialectOptions: {
