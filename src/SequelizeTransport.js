@@ -58,11 +58,13 @@ const writeLog = async (logsModel, metaModel, level, message, meta, application,
 
     if (!keysToExcludeFromMeta.find(x => x === key)) {
       const value = meta[key];
+      const jsonify = value instanceof Object;
       await metaModel.create({
         id: uuid(),
         auditId: id,
         key,
-        value: value instanceof Object ? JSON.stringify(value) : value,
+        value: jsonify ? JSON.stringify(value) : value,
+        isJson: jsonify,
       });
     }
   }
