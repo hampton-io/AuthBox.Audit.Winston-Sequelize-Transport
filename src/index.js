@@ -26,15 +26,8 @@ const getWinstonSequelizeTransport = (config) => {
   assert(config.loggerSettings.auditDb.host, 'Audit Database property host must be supplied');
   assert(config.loggerSettings.auditDb.dialect, 'Audit Database property dialect must be supplied, this must be postgres or mssql');
 
-  const db = new Sequelize(databaseName, config.loggerSettings.auditDb.username, config.loggerSettings.auditDb.password, {
-    host: config.loggerSettings.auditDb.host,
-    dialect: config.loggerSettings.auditDb.dialect,
-    dialectOptions: {
-      encrypt: encryptDb,
-    },
-  });
+
   const options = {
-    sequelize: db,
     database: {
       name: databaseName,
       username: config.loggerSettings.auditDb.username,
