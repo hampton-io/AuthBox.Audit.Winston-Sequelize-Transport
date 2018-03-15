@@ -2,6 +2,7 @@ const Transport = require('winston-transport');
 const Sequelize = require('sequelize');
 const assert = require('assert');
 const uuid = require('uuid/v4');
+const Op = Sequelize.Op;
 
 const logsSchema = {
   id: {
@@ -102,6 +103,7 @@ class SequelizeTransport extends Transport {
       },
       host: opts.database.host,
       dialect: opts.database.dialect,
+      operatorsAliases: Op,
       dialectOptions: {
         encrypt: opts.database.encrypt || false,
       },
