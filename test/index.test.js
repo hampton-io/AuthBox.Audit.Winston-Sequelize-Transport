@@ -42,9 +42,5 @@ describe('When getting the winston sequelize transport ', () => {
     expect(actual).not.toBeNull();
     expect(winstonMock.mock.calls.length).toBe(1);
     expect(winstonMock.mock.calls[0][0].application).toBe('test application');
-    expect(sequelizeMock.mock.calls.length).toBe(1);
-    expect(sequelizeMock.mock.calls[0][0]).toBe('test-db');
-    expect(sequelizeMock.mock.calls[0][1]).toBe('testPerson');
-    expect(sequelizeMock.mock.calls[0][2]).toBe('myPassword');
   });
 });
