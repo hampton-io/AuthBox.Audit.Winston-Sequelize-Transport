@@ -17,6 +17,7 @@ const logsSchema = {
   type: Sequelize.STRING,
   subType: Sequelize.STRING,
   userId: Sequelize.UUID,
+  organisationId: Sequelize.UUID,
 };
 const defaultLogsOptions = {
   timestamps: true,
@@ -37,7 +38,7 @@ const defaultMetaOptions = {
   schema: 'dbo',
   // TODO: Define indexes
 };
-const keysToExcludeFromMeta = ['type', 'subType', 'userId'];
+const keysToExcludeFromMeta = ['type', 'subType', 'userId', 'organisationId'];
 
 const writeLog = async (logsModel, metaModel, level, message, meta, application, environment) => {
   const id = uuid();
@@ -51,7 +52,9 @@ const writeLog = async (logsModel, metaModel, level, message, meta, application,
     type: meta.type,
     subType: meta.subType,
     userId: meta.userId,
+    organisationId: meta.organisationId,
   });
+
 
   const metaKeys = Object.keys(meta);
   for (let i = 0; i < metaKeys.length; i += 1) {

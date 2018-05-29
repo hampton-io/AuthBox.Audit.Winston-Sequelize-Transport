@@ -46,10 +46,30 @@ const loggerConfig = {
 };
 const logger = new (winston.Logger)(loggerConfig);
 
-logger.audit('here in harness', {
+logger.audit('here in harness again', {
   type: 'test',
   subType: 'harness',
   userId: '60d4e302-ca10-4f66-a22b-ff5527617d6c',
   serialNumber: '112345671',
 });
+
+
+logger.audit('here in harness', {
+  type: 'test',
+  subType: 'harness',
+  userId: '60d4e302-ca10-4f66-a22b-ff5527617d6c',
+  serialNumber: '112345671',
+  organisationId: '10d4e302-ca10-4f66-a22b-ff5527617d6e',
+});
+
+logger.audit('here in harness again', {
+  type: 'test',
+  subType: 'harness',
+  userId: '60d4e302-ca10-4f66-a22b-ff5527617d6c',
+  serialNumber: '112345671',
+  organisationId: null,
+});
+
+
+
 console.log('done');
