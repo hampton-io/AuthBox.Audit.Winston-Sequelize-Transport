@@ -27,7 +27,7 @@
   "homepage": "https://github.com/DFE-Digital/login.dfe.audit.winston-sequelize-transport#readme",
   "dependencies": {
     "lodash": "^4.17.5",
-    "sequelize": "^4.37.10",
+    "sequelize": "^5.8.12",
     "tedious": "^2.6.4",
     "uuid": "^3.2.1",
     "winston-transport": "^3.0.1"
