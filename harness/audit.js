@@ -20,7 +20,7 @@ const sequelizeTransport = WinstonSequelizeTransport({
       username: 'sa',
       password,
       dialect: 'mssql',
-      encrypt: false,
+      encrypt: true,
     },
     applicationName: 'audit-harness',
   },

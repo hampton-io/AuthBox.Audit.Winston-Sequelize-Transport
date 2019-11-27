@@ -19,7 +19,7 @@ const getWinstonSequelizeTransport = (config) => {
   }
 
   const databaseName = config.loggerSettings.auditDb.name || 'postgres';
-  const encryptDb = config.loggerSettings.auditDb.encrypt || false;
+  const encryptDb = config.loggerSettings.auditDb.encrypt || true;
 
   assert(config.loggerSettings.auditDb.username, 'Audit Database property username must be supplied');
   assert(config.loggerSettings.auditDb.password, 'Audit Database property password must be supplied');

@@ -109,7 +109,7 @@ class SequelizeTransport extends Transport {
       operatorsAliases: Op,
       dialectOptions: {
         options: {
-          encrypt: opts.database.encrypt || false,
+          encrypt: opts.database.encrypt || true,
         },
       },
     };
