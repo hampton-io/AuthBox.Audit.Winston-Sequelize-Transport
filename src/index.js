@@ -39,7 +39,7 @@ const getWinstonSequelizeTransport = (config) => {
     },
     tableName: 'audit_logs',
     fields: { meta: Sequelize.JSONB },
-    modelOptions: { timestamps: true },
+    modelOptions: { timestamps: true, underscored: true },
     level: 'audit',
     application: config.loggerSettings.applicationName,
     environment: config.hostingEnvironment.env,

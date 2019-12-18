@@ -17,6 +17,8 @@ const logsSchema = {
   subType: { type: Sequelize.STRING, field: 'sub_type' },
   userId: { type: Sequelize.UUID, field: 'user_id' },
   organisationId: { type: Sequelize.UUID, field: 'organisation_id' },
+  createdAt: { type: Sequelize.DATE, field: 'created_at' },
+  updatedAt: { type: Sequelize.DATE, field: 'updated_at' },
 };
 const defaultLogsOptions = {
   timestamps: true,
