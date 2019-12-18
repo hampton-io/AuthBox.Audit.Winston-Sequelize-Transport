@@ -2,7 +2,6 @@ const Transport = require('winston-transport');
 const Sequelize = require('sequelize');
 const assert = require('assert');
 const uuid = require('uuid/v4');
-const Op = Sequelize.Op;
 
 const logsSchema = {
   id: {
@@ -15,9 +14,9 @@ const logsSchema = {
   application: Sequelize.STRING,
   environment: Sequelize.STRING,
   type: Sequelize.STRING,
-  subType: Sequelize.STRING,
-  userId: Sequelize.UUID,
-  organisationId: Sequelize.UUID,
+  subType: { type: Sequelize.STRING, field: 'sub_type' },
+  userId: { type: Sequelize.UUID, field: 'user_id' },
+  organisationId: { type: Sequelize.UUID, field: 'organisation_id' },
 };
 const defaultLogsOptions = {
   timestamps: true,
@@ -106,7 +105,6 @@ class SequelizeTransport extends Transport {
       },
       host: opts.database.host,
       dialect: opts.database.dialect,
-      operatorsAliases: Op,
       dialectOptions: {
         encrypt: opts.database.encrypt || true,
       },
@@ -117,13 +115,13 @@ class SequelizeTransport extends Transport {
 
     this._db = new Sequelize(opts.database.name, opts.database.username, opts.database.password, dbOpts);
 
-    const logsOptions = Object.assign({}, defaultLogsOptions);
+    const logsOptions = { tableName: 'audit_logs', ...defaultLogsOptions };
     if (opts.database.schema) {
       logsOptions.schema = opts.database.schema;
     }
     this._logs = this._db.define('AuditLogs', logsSchema, logsOptions);
 
-    const metaOptions = Object.assign({}, defaultMetaOptions);
+    const metaOptions = { tableName: 'audit_log_meta', ...defaultMetaOptions };
     if (opts.database.schema) {
       metaOptions.schema = opts.database.schema;
     }

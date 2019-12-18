@@ -1,6 +1,6 @@
 {
-  "name": "login.dfe.audit.winston-sequelize-transport",
-  "version": "2.5.0",
+  "name": "authbox.audit.winston-sequelize-transport",
+  "version": "1.0.0",
   "description": "",
   "main": "src/index.js",
   "scripts": {
@@ -8,28 +8,28 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DFE-Digital/login.dfe.audit.winston-sequelize-transport.git"
+    "url": "git+https://github.com/hampton-io/AuthBox.Audit.Winston-Sequelize-Transport.git"
   },
   "devDependencies": {
-    "eslint": "^4.19.1",
-    "eslint-config-airbnb-base": "^11.3.2",
-    "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jest": "^21.4.1",
+    "eslint": "^6.7.2",
+    "eslint-config-airbnb-base": "^14.0.0",
+    "eslint-plugin-import": "^2.19.1",
+    "eslint-plugin-jest": "^23.1.1",
     "jest": "^24.9.0",
     "jest-cli": "^24.9.0",
-    "winston": "^2.4.0"
+    "winston": "^2.4.4"
   },
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/DFE-Digital/login.dfe.audit.winston-sequelize-transport/issues"
+    "url": "https://github.com/hampton-io/AuthBox.Audit.Winston-Sequelize-Transport/issues"
   },
-  "homepage": "https://github.com/DFE-Digital/login.dfe.audit.winston-sequelize-transport#readme",
+  "homepage": "https://github.com/hampton-io/AuthBox.Audit.Winston-Sequelize-Transport#readme",
   "dependencies": {
     "lodash": "^4.17.15",
-    "sequelize": "^4.44.3",
-    "uuid": "^3.2.1",
+    "sequelize": "^5.21.3",
+    "uuid": "^3.3.3",
     "winston-transport": "^3.2.1",
-    "tedious": "^2.6.4"
+    "tedious": "^6.6.2"
   }
 }

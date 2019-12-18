@@ -1,6 +1,4 @@
-# login.dfe.audit.winston-sequelize-transport
-
-[![Build Status](https://travis-ci.org/DFE-Digital/login.dfe.audit.winston-sequelize-transport.svg?branch=master)](https://travis-ci.org/DFE-Digital/login.dfe.audit.winston-sequelize-transport)
+# AuthBox.Audit.Winston-Sequelize-Transport
 
 Creates a winston sequelize transport. The following config options are required:
 
@@ -27,7 +25,7 @@ usage is as follows:
 
 ```
 
-const winstonSequelizeTransport = require('login.dfe.audit.winston-sequelize-transport');
+const winstonSequelizeTransport = require('authbox.audit.winston-sequelize-transport');
 
 
 const transport = winstonSequelizeTransport(config);

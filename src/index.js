@@ -1,8 +1,8 @@
 'use strict';
 
 const Sequelize = require('sequelize');
-const SequelizeTransport = require('./SequelizeTransport');
 const assert = require('assert');
+const SequelizeTransport = require('./SequelizeTransport');
 
 const getIntValueOrDefault = (value, defaultValue = 0) => {
   if (!value) {
